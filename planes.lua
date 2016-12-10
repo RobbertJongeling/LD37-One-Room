@@ -13,6 +13,8 @@ function generate_planes(amount)
       p.x = p.x + (p.speed * math.cos(p.rot))
       p.y = p.y + (p.speed * math.sin(p.rot))
     end
+    p.drawx = p.x
+    p.drawy = p.y
     planes[i] = p
   end
   return planes

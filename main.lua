@@ -67,13 +67,19 @@ function newscreen(x, y, w, h, bg, fnct, airport)
 end
 
 function love.update(dt)
+  sweep.rot = (sweep.rot + ((math.pi*2)/150)) % (math.pi*2)
+
   for i,a in pairs(airports) do
     for j,p in pairs(a.planes) do
       p.move()
+      if(false) then
+        p.drawx = p.x
+        p.drawy = p.y
+      end
     end
   end
 
-  sweep.rot = (sweep.rot + ((math.pi*2)/150)) % (math.pi*2)
+
 end
 
 function apply_border(panel, border_size)
@@ -130,13 +136,13 @@ function draw_plane(panel, planes)
     local s = sf * panel.width
     local ox = 0
     local oy = 0
-    local drawx = scalex(panel, p.x)
-    local drawy = scaley(panel, p.y)
+    local drawx = scalex(panel, p.drawx)
+    local drawy = scaley(panel, p.drawy)
     if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
       draw_trajectory(panel, p)
       love.graphics.setColor(radar_green)
       love.graphics.draw(plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
-      end
+    end
   end
 end
 
@@ -150,7 +156,7 @@ end
 
 function draw_trajectory(panel, plane)
     love.graphics.setColor(grey)
-    love.graphics.line(scalex(panel, plane.x), scaley(panel, plane.y), scalex(panel, plane.startx), scaley(panel, plane.starty))
+    love.graphics.line(scalex(panel, plane.drawx), scaley(panel, plane.drawy), scalex(panel, plane.startx), scaley(panel, plane.starty))
 end
 
 function love.draw()
