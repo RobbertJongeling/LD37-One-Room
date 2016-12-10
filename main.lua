@@ -21,6 +21,8 @@ function love.load()
   screenwidth = 1700
   screenheight = 650
 
+  sf = 0.00005
+
   airports = {}
   for i = 1, 4 do
     airports[i] = generate_airport()
@@ -90,24 +92,38 @@ function draw_radar(panel, airport)
   local a = bordered_panel.x  + (bordered_panel.width / 2)
   local b = bordered_panel.y + (bordered_panel.height / 2)
 
+  love.graphics.setLineWidth(1)
   love.graphics.circle("line", a, b, smallest / 2)
 
   draw_plane(bordered_panel, airport.planes)
+  draw_runways(bordered_panel, airport.runways)
+end
+
+function draw_runways(panel, runways)
+  for i, r in pairs(runways) do
+    local s = sf * panel.width
+
+    love.graphics.setLineWidth(2)
+    love.graphics.setColor(radar_green)
+    love.graphics.line((r.x1 * panel.height + panel.x + ((panel.width - panel.height) / 2)),
+                        (r.y1 * panel.height + panel.y),
+                        (r.x2 * panel.height + panel.x + ((panel.width - panel.height) / 2)),
+                        (r.y2 * panel.height + panel.y))
+  end
 end
 
 function draw_plane(panel, planes)
   for i, p in pairs(planes) do
 
-    local sx = .00005 * panel.width
-    local sy = .00005 * panel.width
+    local s = sf * panel.width
     local ox = 0
     local oy = 0
     local drawx = scalex(panel, p.x)
     local drawy = scaley(panel, p.y)
     if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
       draw_trajectory(panel, p)
-      love.graphics.draw(plane_asset, drawx, drawy, p.rot, sx, sy, ox, oy)
-    end
+      love.graphics.draw(plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
+      end
   end
 end
 
