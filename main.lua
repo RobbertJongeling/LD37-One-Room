@@ -21,8 +21,6 @@ function draw_radar(x, y, width, height)
 
   love.graphics.circle("line", a, b, width / 2)
   gameStarted = false
-  wheight = love.window.fromPixels(love.graphics.getHeight())
-  wwidth = love.window.fromPixels(love.graphics.getWidth())
 end
 
 function love.draw()

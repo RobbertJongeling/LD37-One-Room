@@ -1,4 +1,6 @@
 function printMenu()
+  local wwidth = love.window.fromPixels(love.graphics.getWidth())
+  local wheight = love.window.fromPixels(love.graphics.getHeight())
   love.graphics.setColor(255,255,255,255)
   love.graphics.rectangle("fill", 0, 0, love.window.toPixels(wwidth), love.window.toPixels(wwidth))
   love.graphics.setColor(222,222,222,255)
@@ -8,6 +10,6 @@ function printMenu()
       love.graphics.print("mousex: " .. mousex .. " mousey: " .. mousey,love.window.toPixels(100),love.window.toPixels(100))
       love.graphics.print("wwidth: " .. wwidth .. " wheight: " .. wheight,love.window.toPixels(100),love.window.toPixels(200))
   else
-      love.graphics.print("click mouse",love.window.toPixels(100),love.window.toPixels(100))
+      love.graphics.print("click mouse")
   end
 end
