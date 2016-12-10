@@ -15,17 +15,18 @@ function love.keypressed(key, u)
 end
 
 function draw_radar(x, y, width, height)
-  -- assuming that this indicates a square...
+  local dim = 0
+  if width >= height then dim = height else dim = width end
   love.graphics.setColor(radar_green)
 
-  local a = x + (width / 2)
-  local b = y + (height / 2)
+  local a = x + (dim / 2)
+  local b = y + (dim / 2)
 
-  love.graphics.circle("line", a, b, width / 2)
+  love.graphics.circle("line", a, b, dim / 2)
   draw_plane(x, y, math.pi * .25)
-  draw_plane(x + width, y + height, math.pi * 1.25)
-  draw_plane(x, y + height, math.pi * 1.75)
-  draw_plane(x + width, y, math.pi * .75)
+  draw_plane(x + dim, y + dim, math.pi * 1.25)
+  draw_plane(x, y + dim, math.pi * 1.75)
+  draw_plane(x + dim, y, math.pi * .75)
 end
 
 function draw_plane(x, y, rot)
