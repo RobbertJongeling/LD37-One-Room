@@ -2,7 +2,7 @@ require "keyhandler"
 require "mousehandler"
 require "menu"
 require "planes"
-require "airports"
+require "airport"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
@@ -22,10 +22,10 @@ function love.load()
   screenheight = 650
 
   screens = {}
-  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0}, draw_radar)
-  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0}, draw_radar)
-  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255}, draw_radar)
-  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255}, draw_radar)
+  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0}, draw_radar, generate_airport())
+  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0}, draw_radar, generate_airport())
+  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255}, draw_radar, generate_airport())
+  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255}, draw_radar, generate_airport())
 
   activescreen = 0
 
@@ -33,7 +33,7 @@ function love.load()
   planes = generate_planes(100)
 end
 
-function newscreen(x, y, w, h, bg, fnct)
+function newscreen(x, y, w, h, bg, fnct, airport)
   local self = {}
   self.x = x
   self.y = y
@@ -41,12 +41,13 @@ function newscreen(x, y, w, h, bg, fnct)
   self.height = h
   self.backgroundcolor = bg
   self.fnct = fnct
+  self.airport = airport
   self.draw = function(args)
     if self.fnct then
       if args then
-        self.fnct(args)
+        self.fnct(args, self.airport)
       else
-        self.fnct({x = self.x, y = self.y, width = self.width, height = self.height})
+        self.fnct({x = self.x, y = self.y, width = self.width, height = self.height}, self.airport)
       end
     end
   end
@@ -66,8 +67,8 @@ function apply_border(panel, border_size)
   return newpanel
 end
 
-function draw_radar(panel)
-  local bordered_panel = apply_border(panel, 40)
+function draw_radar(panel, airport)
+  local bordered_panel = apply_border(panel, 50)
   local smallest = 0
   if panel.width >= bordered_panel.height then
     smallest = bordered_panel.height
@@ -81,14 +82,14 @@ function draw_radar(panel)
 
   love.graphics.circle("line", a, b, smallest / 2)
 
-  draw_plane(bordered_panel, planes)
+  draw_plane(bordered_panel, airport.planes)
 end
 
 function draw_plane(panel, planes)
   for i, p in pairs(planes) do
 
-    local sx = .1
-    local sy = .1
+    local sx = .00005 * panel.width
+    local sy = .00005 * panel.width
     local ox = 0
     local oy = 0
     love.graphics.draw(plane_asset, p.sx * panel.width + panel.x, p.sy * panel.height + panel.y, p.rot, sx, sy, ox, oy)
