@@ -129,7 +129,7 @@ function draw_plane(panel, planes)
 
     local s = sf * panel.width
     local ox = 0
-    local oy = 0
+    local oy = 256
     local drawx = scalex(panel, p.x)
     local drawy = scaley(panel, p.y)
     if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
