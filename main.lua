@@ -1,13 +1,15 @@
 require "keyhandler"
 require "mousehandler"
 require "menu"
+require "planes"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
 
+  load_assets()
+
   wwidth = love.graphics.getWidth()
   wheight = love.graphics.getHeight()
-  foregroundImage = love.graphics.newImage("background.png")
   defaultBgColor = {54, 196, 180};
   gameStarted = false
   mousex = 0
@@ -25,6 +27,9 @@ function love.load()
   screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255})
 
   activescreen = 0
+
+  radar_green = {2, 206, 63 }
+  planes = generate_planes(2)
 end
 
 function newscreen(x, y, w, h, bg)
@@ -40,6 +45,33 @@ end
 
 function love.update(dt)
 
+end
+
+
+function draw_radar(x, y, width, height)
+  local dim = 0
+  if width >= height then dim = height else dim = width end
+  love.graphics.setColor(radar_green)
+
+  local a = x + (dim / 2)
+  local b = y + (dim / 2)
+
+  love.graphics.circle("line", a, b, dim / 2)
+
+  local panel = { x = x, y = y}
+  draw_plane(panel, planes)
+end
+
+function draw_plane(panel, planes)
+  for i, v in pairs(planes) do
+    local p = v
+
+    local sx = .1
+    local sy = .1
+    local ox = 0
+    local oy = 0
+    love.graphics.draw(plane_asset, p.x + panel.x, p.y + panel.y, p.rot, sx, sy, ox, oy)
+  end
 end
 
 function love.draw()
@@ -75,4 +107,9 @@ function drawActiveScreen(x, y, width, height)
       love.graphics.rectangle("fill", x, y, width, height)
     end
   end
+end
+
+function load_assets()
+  plane_asset = love.graphics.newImage("assets/black-plane.png")
+  foregroundImage = love.graphics.newImage("assets/background.png")
 end

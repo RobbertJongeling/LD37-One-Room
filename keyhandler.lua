@@ -1,6 +1,6 @@
 function love.keypressed(k)
-  if k == 'escape' then
-    love.event.quit()
+  if k == 'escape' or k == 'q' then
+    love.event.quit(0)
   end
   if k == 's' then
     gameStarted = not gameStarted
