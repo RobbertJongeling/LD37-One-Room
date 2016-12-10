@@ -1,7 +1,7 @@
 function generate_planes(amount)
   local planes = {}
 
-  for i = 0, amount do
+  for i = 1, amount do
     local p = {}
     p.sx = love.math.random()
     p.sy = love.math.random()

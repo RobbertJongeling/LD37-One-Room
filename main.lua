@@ -30,7 +30,7 @@ function love.load()
   activescreen = 0
 
   radar_green = {2, 206, 63 }
-  planes = generate_planes(2)
+  planes = generate_planes(100)
 end
 
 function newscreen(x, y, w, h, bg, fnct)
