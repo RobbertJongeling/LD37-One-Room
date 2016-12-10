@@ -71,8 +71,7 @@ function draw_radar(panel)
 end
 
 function draw_plane(panel, planes)
-  for i, v in pairs(planes) do
-    local p = v
+  for i, p in pairs(planes) do
 
     local sx = .1
     local sy = .1
