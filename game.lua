@@ -1,0 +1,3 @@
+Class "Game" {
+  running
+}
