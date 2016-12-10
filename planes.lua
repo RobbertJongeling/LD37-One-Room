@@ -5,6 +5,8 @@ function generate_planes(amount)
     local p = {}
     p.x = love.math.random()
     p.y = love.math.random()
+    p.startx = p.x
+    p.starty = p.y
     p.rot = love.math.random()*2*math.pi
     p.speed = 0.00025;
     p.move = function()
