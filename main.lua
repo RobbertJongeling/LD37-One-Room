@@ -100,8 +100,12 @@ function draw_plane(panel, planes)
     local sx = .00005 * panel.width
     local sy = .00005 * panel.width
     local ox = 0
-    local oy = 0    
-    love.graphics.draw(plane_asset, p.x * panel.height + panel.x + ((panel.width - panel.height) / 2), p.y * panel.height + panel.y, p.rot, sx, sy, ox, oy)
+    local oy = 0
+    local drawx = p.x * panel.height + panel.x + ((panel.width - panel.height) / 2)
+    local drawy = p.y * panel.height + panel.y
+    if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
+      love.graphics.draw(plane_asset, drawx, drawy, p.rot, sx, sy, ox, oy)
+    end
   end
 end
 
