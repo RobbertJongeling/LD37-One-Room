@@ -43,9 +43,9 @@ function newscreen(x, y, w, h, bg, fnct)
   self.draw = function(args)
     if self.fnct then
       if args then
-        self.fnct(unpack(args))
+        self.fnct(args)
       else
-        self.fnct(self.x,self.y,self.width,self.height)
+        self.fnct({x = self.x, y = self.y, width = self.width, height = self.height})
       end
     end
   end
@@ -57,17 +57,16 @@ function love.update(dt)
 end
 
 
-function draw_radar(x, y, width, height)
+function draw_radar(panel)
   local dim = 0
-  if width >= height then dim = height else dim = width end
+  if panel.width >= panel.height then dim = panel.height else dim = panel.width end
   love.graphics.setColor(radar_green)
 
-  local a = x + (dim / 2)
-  local b = y + (dim / 2)
+  local a = panel.x + (dim / 2)
+  local b = panel.y + (dim / 2)
 
   love.graphics.circle("line", a, b, dim / 2)
 
-  local panel = { x = x, y = y}
   draw_plane(panel, planes)
 end
 
@@ -79,7 +78,7 @@ function draw_plane(panel, planes)
     local sy = .1
     local ox = 0
     local oy = 0
-    love.graphics.draw(plane_asset, p.x + panel.x, p.y + panel.y, p.rot, sx, sy, ox, oy)
+    love.graphics.draw(plane_asset, p.sx * panel.width + panel.x, p.sy * panel.height + panel.y, p.rot, sx, sy, ox, oy)
   end
 end
 
@@ -108,14 +107,10 @@ function drawActiveScreen(x, y, width, height)
   else
     if activescreen == 0 then
       for i,s in pairs(screens) do
-        --love.graphics.setColor(s.backgroundcolor)
-        --love.graphics.rectangle("fill", s.x, s.y, s.width, s.height)
         s.draw()
       end
     else
-      --love.graphics.setColor(screens[activescreen].backgroundcolor)
-      --love.graphics.rectangle("fill", x, y, width, height)
-        screens[activescreen].draw({x, y, width, height})
+      screens[activescreen].draw({x = x, y = y, width = width, height = height})
     end
   end
 end
