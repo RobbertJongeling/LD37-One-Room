@@ -1,14 +1,15 @@
 require "keyhandler"
 require "mousehandler"
 require "menu"
+require "planes"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
   radar_green = {2, 206, 63 }
   load_assets()
   gameStarted = true
+  planes = generate_planes(2)
 end
-
 
 function love.keypressed(key, u)
   if key == "q" then love.event.quit(0) end
@@ -23,18 +24,21 @@ function draw_radar(x, y, width, height)
   local b = y + (dim / 2)
 
   love.graphics.circle("line", a, b, dim / 2)
-  draw_plane(x, y, math.pi * .25)
-  draw_plane(x + dim, y + dim, math.pi * 1.25)
-  draw_plane(x, y + dim, math.pi * 1.75)
-  draw_plane(x + dim, y, math.pi * .75)
+
+  local panel = { x = x, y = y}
+  draw_plane(panel, planes)
 end
 
-function draw_plane(x, y, rot)
-  sx = .1
-  sy = .1
-  ox = 0
-  oy = 0
-  love.graphics.draw(plane_asset, x, y, rot, sx, sy, ox, oy)
+function draw_plane(panel, planes)
+  for i, v in pairs(planes) do
+    local p = v
+
+    local sx = .1
+    local sy = .1
+    local ox = 0
+    local oy = 0
+    love.graphics.draw(plane_asset, p.x + panel.x, p.y + panel.y, p.rot, sx, sy, ox, oy)
+  end
 end
 
 function love.draw()
