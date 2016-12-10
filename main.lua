@@ -21,10 +21,10 @@ function love.load()
   screenheight = 650
 
   screens = {}
-  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0})
-  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0})
-  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255})
-  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255})
+  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0}, draw_radar)
+  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0}, draw_radar)
+  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255}, draw_radar)
+  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255}, draw_radar)
 
   activescreen = 0
 
@@ -32,16 +32,25 @@ function love.load()
   planes = generate_planes(2)
 end
 
-function newscreen(x, y, w, h, bg)
+function newscreen(x, y, w, h, bg, fnct)
   local self = {}
   self.x = x
   self.y = y
   self.width = w
   self.height = h
   self.backgroundcolor = bg
+  self.fnct = fnct
+  self.draw = function(args)
+    if self.fnct then
+      if args then
+        self.fnct(unpack(args))
+      else
+        self.fnct(self.x,self.y,self.width,self.height)
+      end
+    end
+  end
   return self
 end
-
 
 function love.update(dt)
 
@@ -99,12 +108,14 @@ function drawActiveScreen(x, y, width, height)
   else
     if activescreen == 0 then
       for i,s in pairs(screens) do
-        love.graphics.setColor(s.backgroundcolor)
-        love.graphics.rectangle("fill", s.x, s.y, s.width, s.height)
+        --love.graphics.setColor(s.backgroundcolor)
+        --love.graphics.rectangle("fill", s.x, s.y, s.width, s.height)
+        s.draw()
       end
     else
-      love.graphics.setColor(screens[activescreen].backgroundcolor)
-      love.graphics.rectangle("fill", x, y, width, height)
+      --love.graphics.setColor(screens[activescreen].backgroundcolor)
+      --love.graphics.rectangle("fill", x, y, width, height)
+        screens[activescreen].draw({x, y, width, height})
     end
   end
 end
