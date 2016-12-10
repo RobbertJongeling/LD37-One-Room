@@ -37,6 +37,9 @@ function love.load()
   activescreen = 0
 
   radar_green = {2, 206, 63 }
+  sweep = {}
+  sweep.rot = math.pi*2;
+
   planes = generate_planes(100)
 end
 
@@ -67,6 +70,8 @@ function love.update(dt)
       p.move()
     end
   end
+
+  sweep.rot = (sweep.rot + ((math.pi*2)/150)) % (math.pi*2)
 end
 
 function apply_border(panel, border_size)
@@ -96,6 +101,12 @@ function draw_radar(panel, airport)
 
   draw_plane(bordered_panel, airport.planes)
   draw_runways(bordered_panel, airport.runways)
+  draw_sweep(bordered_panel)
+end
+
+function draw_sweep(panel)
+  local s = 0.000685 * panel.width
+  love.graphics.draw(sweep_asset, panel.x + panel.width/2, panel.y + panel.height/2, sweep.rot, s, s)
 end
 
 function draw_runways(panel, runways)
@@ -161,4 +172,5 @@ end
 function load_assets()
   plane_asset = love.graphics.newImage("assets/black-plane.png")
   foregroundImage = love.graphics.newImage("assets/background.png")
+  sweep_asset = love.graphics.newImage("assets/radar-sweep.png")
 end
