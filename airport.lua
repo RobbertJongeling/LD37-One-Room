@@ -17,7 +17,7 @@ function generate_airport()
   runway2.y1 = 1
   airport.runways[1] = runway2
 
-  airport.planes = generate_planes(5)
+  airport.planes = generate_planes(3)
 
   return airport
 end

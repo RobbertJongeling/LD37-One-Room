@@ -3,9 +3,14 @@ function generate_planes(amount)
 
   for i = 1, amount do
     local p = {}
-    p.sx = love.math.random()
-    p.sy = love.math.random()
+    p.x = love.math.random()
+    p.y = love.math.random()
     p.rot = love.math.random()*2*math.pi
+    p.speed = 0.001;
+    p.move = function()
+      p.x = p.x + (p.speed * math.cos(p.rot))
+      p.y = p.y + (p.speed * math.sin(p.rot))
+    end
     planes[i] = p
   end
   return planes

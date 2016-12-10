@@ -21,11 +21,16 @@ function love.load()
   screenwidth = 1700
   screenheight = 650
 
+  airports = {}
+  for i = 1, 4 do
+    airports[i] = generate_airport()
+  end
+
   screens = {}
-  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0}, draw_radar, generate_airport())
-  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0}, draw_radar, generate_airport())
-  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255}, draw_radar, generate_airport())
-  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255}, draw_radar, generate_airport())
+  screens[1] = newscreen(screenx, screeny, screenwidth/2, screenheight/2, {255, 0, 0}, draw_radar, airports[1])
+  screens[2] = newscreen(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2, {0, 255, 0}, draw_radar, airports[2])
+  screens[3] = newscreen(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2, {0, 0, 255}, draw_radar, airports[3])
+  screens[4] = newscreen(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2, {255, 255, 255}, draw_radar, airports[4])
 
   activescreen = 0
 
@@ -55,7 +60,11 @@ function newscreen(x, y, w, h, bg, fnct, airport)
 end
 
 function love.update(dt)
-
+  for i,a in pairs(airports) do
+    for j,p in pairs(a.planes) do
+      p.move()
+    end
+  end
 end
 
 function apply_border(panel, border_size)
@@ -91,8 +100,8 @@ function draw_plane(panel, planes)
     local sx = .00005 * panel.width
     local sy = .00005 * panel.width
     local ox = 0
-    local oy = 0
-    love.graphics.draw(plane_asset, p.sx * panel.width + panel.x, p.sy * panel.height + panel.y, p.rot, sx, sy, ox, oy)
+    local oy = 0    
+    love.graphics.draw(plane_asset, p.x * panel.height + panel.x + ((panel.width - panel.height) / 2), p.y * panel.height + panel.y, p.rot, sx, sy, ox, oy)
   end
 end
 
