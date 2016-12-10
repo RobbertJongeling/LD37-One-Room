@@ -37,6 +37,8 @@ function love.load()
   activescreen = 0
 
   radar_green = {2, 206, 63 }
+  grey = {169, 169, 169, 169}
+
   sweep = {}
   sweep.rot = math.pi*2;
 
@@ -128,12 +130,27 @@ function draw_plane(panel, planes)
     local s = sf * panel.width
     local ox = 0
     local oy = 0
-    local drawx = p.x * panel.height + panel.x + ((panel.width - panel.height) / 2)
-    local drawy = p.y * panel.height + panel.y
+    local drawx = scalex(panel, p.x)
+    local drawy = scaley(panel, p.y)
     if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
+      draw_trajectory(panel, p)
+      love.graphics.setColor(radar_green)
       love.graphics.draw(plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
-    end
+      end
   end
+end
+
+function scalex(panel, x)
+  return x * panel.height + panel.x + ((panel.width - panel.height) / 2)
+end
+
+function scaley(panel, y)
+  return y * panel.height + panel.y
+end
+
+function draw_trajectory(panel, plane)
+    love.graphics.setColor(grey)
+    love.graphics.line(scalex(panel, plane.x), scaley(panel, plane.y), scalex(panel, plane.startx), scaley(panel, plane.starty))
 end
 
 function love.draw()
