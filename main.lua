@@ -2,6 +2,7 @@ require "keyhandler"
 require "mousehandler"
 require "menu"
 require "planes"
+require "airports"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
