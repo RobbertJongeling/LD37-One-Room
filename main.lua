@@ -56,18 +56,31 @@ function love.update(dt)
 
 end
 
+function apply_border(panel, border_size)
+  local newpanel = {}
+  newpanel.x = panel.x + border_size
+  newpanel.y=  panel.y + border_size
+  newpanel.width = panel.width - border_size * 2
+  newpanel.height = panel.height - border_size * 2
+  return newpanel
+end
 
 function draw_radar(panel)
-  local dim = 0
-  if panel.width >= panel.height then dim = panel.height else dim = panel.width end
+  local bordered_panel = apply_border(panel, 40)
+  local smallest = 0
+  if panel.width >= bordered_panel.height then
+    smallest = bordered_panel.height
+  else
+    smallest = bordered_panel.width
+  end
   love.graphics.setColor(radar_green)
 
-  local a = panel.x + (dim / 2)
-  local b = panel.y + (dim / 2)
+  local a = bordered_panel.x  + (bordered_panel.width / 2)
+  local b = bordered_panel.y + (bordered_panel.height / 2)
 
-  love.graphics.circle("line", a, b, dim / 2)
+  love.graphics.circle("line", a, b, smallest / 2)
 
-  draw_plane(panel, planes)
+  draw_plane(bordered_panel, planes)
 end
 
 function draw_plane(panel, planes)
