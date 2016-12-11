@@ -8,13 +8,14 @@ require "panel"
 require "borderedpanel"
 require "game"
 require "sweep"
+require "button"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
 
   load_assets()
-  buttons = create_buttons()
   game = Game.create()
+  buttons = create_buttons()
 end
 
 function load_assets()
@@ -39,6 +40,15 @@ end
 
 function love.update(dt)
   if(game.gameStarted) then
+    --check button clicks
+    if mousex and mousey then
+      for i, b in pairs(buttons) do
+        if b:isclicked(mousex, mousey) then b:click() end
+      end
+      mousex = nil
+      mousey = nil
+    end
+
     game.sweep:update()
 
     for i,a in pairs(game.airports) do
@@ -94,5 +104,7 @@ function drawActiveScreen()
 end
 
 function create_buttons()
-  
+  local btns = {}
+  btns[1] = Button.create(307,844,129,42, function() game:set_active_screen(1) end)
+  return btns
 end
