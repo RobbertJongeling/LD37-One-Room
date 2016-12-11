@@ -12,6 +12,7 @@ function Plane.create()
   plane.hist = {{x = plane.x, y = plane.y}}
   plane.drawx = plane.x
   plane.drawy = plane.y
+  plane.drawrot = plane.rot
   plane.angle = 0
   plane.crashed = false
 
@@ -36,8 +37,11 @@ function Plane:move()
 end
 
 function Plane:update_draw_position()
-  self.drawx = self.x
-  self.drawy = self.y
+  if not self.crashed then
+    self.drawx = self.x
+    self.drawy = self.y
+    self.drawrot = self.rot
+  end
 end
 
 function Plane:destroy()
@@ -46,11 +50,16 @@ function Plane:destroy()
 end
 
 function Plane:has_collision_with(plane)
-  local r = math.sqrt((plane.x - self.x) * (plane.x - self.x) + (plane.y - self.y) * (plane.y - self.y))
-  return r < 0.01 --magic value
+  if not self.crashed and not plane.crashed then
+    local r = math.sqrt((plane.x - self.x) * (plane.x - self.x) + (plane.y - self.y) * (plane.y - self.y))
+    return r < 0.01 --magic value
+  end
+  return false
 end
 
 function Plane:apply_rotation(rotation)
-  self.rot = self.rot + rotation
-  table.insert(self.hist, {x = self.x, y = self.y})
+  if not self.crashed then
+    self.rot = self.rot + rotation
+    table.insert(self.hist, {x = self.x, y = self.y})
+  end
 end
