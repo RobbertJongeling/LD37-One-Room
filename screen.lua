@@ -52,7 +52,7 @@ function Screen:draw_radar(fullscreen)
   self:draw_sweep(bordered_panel)
 
   love.graphics.setColor(self.radar_green)
-  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)  
+  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)
 end
 
 function Screen:draw_planes(panel, planes)
@@ -73,8 +73,9 @@ function Screen:draw_planes(panel, planes)
 end
 
 function Screen:draw_trajectory(panel, plane)
+    local hist = plane.hist
     love.graphics.setColor(self.grey)
-    love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, plane.startx), self:scaley(panel, plane.starty))
+    love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, hist[1].x), self:scaley(panel, hist[1].y))
 end
 
 function Screen:draw_runways(panel, runways)

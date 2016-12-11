@@ -9,8 +9,7 @@ function Plane.create()
   plane.y = love.math.random()
   plane.rot = love.math.random()*2*math.pi
   plane.speed = 0.00025;
-  plane.startx = plane.x
-  plane.starty = plane.y
+  plane.hist = {{x = plane.x, y = plane.y}}
   plane.drawx = plane.x
   plane.drawy = plane.y
   plane.angle = 0
@@ -38,4 +37,9 @@ end
 function Plane:update_draw_position()
   self.drawx = self.x
   self.drawy = self.y
+end
+
+function Plane:apply_rotation(rotation)
+  self.rot = self.rot + rotation
+  table.insert(self.hist, {x = self.x, y = self.y})
 end
