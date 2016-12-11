@@ -13,16 +13,8 @@ function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
 
   load_assets()
-
-  -- dimensions of the "full screen" panel
-  local screenx = 110
-  local screeny = 80
-  local screenwidth = 1700
-  local screenheight = 650
-  local fullscreenpanel = Panel.create(screenx, screeny, screenwidth, screenheight)
-
   game = Game.create()
-  game:init(fullscreenpanel)
+  frame = 0
 end
 
 function load_assets()
@@ -31,14 +23,29 @@ function load_assets()
   sweep_asset = love.graphics.newImage("assets/radar-sweep.png")
 end
 
-function love.update(dt)
-  game.sweep:update()
+function start_game()
+  -- dimensions of the "full screen" panel
+  local screenx = 110
+  local screeny = 80
+  local screenwidth = 1700
+  local screenheight = 650
+  local fullscreenpanel = Panel.create(screenx, screeny, screenwidth, screenheight)
+  game:init(fullscreenpanel)
+  game.gameStarted = true
+end
 
-  for i,a in pairs(game.airports) do
-    for j,p in pairs(a.planes) do
-      p:move()
-      if(false) then --TODO update draw position when sweep "hits" planes position
-        p:update_draw_position()
+function love.update(dt)
+  frame = (frame + 1) % 80
+  if(game.gameStarted) then
+    game.sweep:update()
+
+    for i,a in pairs(game.airports) do
+      for j,p in pairs(a.planes) do
+        p:move()
+        --temp fix TODO make properly
+        if frame % 80 == 0 then
+          p:update_draw_position()
+        end
       end
     end
   end

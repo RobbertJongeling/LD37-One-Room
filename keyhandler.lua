@@ -3,7 +3,7 @@ function love.keypressed(k)
     love.event.quit(0)
   end
   if k == 's' then
-    game.gameStarted = not game.gameStarted
+    start_game()
   end
   if k == '0' then
     game:set_active_screen(0)

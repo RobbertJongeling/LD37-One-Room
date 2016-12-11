@@ -7,7 +7,6 @@ function Game.create()
 
   game.gameStarted = false
   game.activescreen = 0
-  game.sweep = Sweep.create()
   game.airports = {}
   game.screens = {}
 
@@ -16,7 +15,8 @@ end
 
 function Game:init(fullscreenpanel)
   game.airports = self:create_airports()
-  game.screens = self:create_screens(fullscreenpanel)
+  game.screens = self:create_screens(fullscreenpanel)  
+  game.sweep = Sweep.create()
 end
 
 function Game:create_airports()
