@@ -47,15 +47,15 @@ function Screen:draw_radar(fullscreen)
   love.graphics.setLineWidth(1)
   love.graphics.circle("line", a, b, smallest / 2)
 
-  self:draw_plane(bordered_panel, self.airport.planes)
+  self:draw_planes(bordered_panel, self.airport.planes)
   self:draw_runways(bordered_panel, self.airport.runways)
   self:draw_sweep(bordered_panel)
 
   love.graphics.setColor(self.radar_green)
-  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)
+  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)  
 end
 
-function Screen:draw_plane(panel, planes)
+function Screen:draw_planes(panel, planes)
   for i, p in pairs(planes) do
 
     local s = self.sf * panel.width
@@ -83,20 +83,21 @@ function Screen:draw_runways(panel, runways)
 
     love.graphics.setLineWidth(2)
     love.graphics.setColor(self.radar_green)
-    love.graphics.line((r.x1 * panel.height + panel.x + ((panel.width - panel.height) / 2)),
-                        (r.y1 * panel.height + panel.y),
-                        (r.x2 * panel.height + panel.x + ((panel.width - panel.height) / 2)),
-                        (r.y2 * panel.height + panel.y))
+
+    love.graphics.line(
+      self:scalex(panel, r.x1), self:scaley(panel, r.y1),
+      self:scalex(panel, r.x2), self:scaley(panel, r.y2)
+    )
   end
 end
 
 function Screen:draw_sweep(panel)
-  local s = 0.000685 * panel.width
-  love.graphics.draw(sweep_asset, panel.x + panel.width/2, panel.y + panel.height/2, game.sweep.rot, s, s)
+  local s = 0.002 * panel.width
+  love.graphics.draw(sweep_asset, panel.x + panel.width/2, panel.y + panel.height/2, -game.sweep.rot, s, s)
 end
 
 function Screen:scalex(panel, x)
-  return x * panel.height + panel.x + ((panel.width - panel.height) / 2)
+  return x * panel.width + panel.x
 end
 
 function Screen:scaley(panel, y)

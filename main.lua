@@ -25,9 +25,11 @@ end
 
 function start_game()
   -- dimensions of the "full screen" panel
-  local screenx = 110
+  --local screenx = 110
+  local screenx = 625
   local screeny = 80
-  local screenwidth = 1700
+  --local screenwidth = 1700
+  local screenwidth = 650
   local screenheight = 650
   local fullscreenpanel = Panel.create(screenx, screeny, screenwidth, screenheight)
   game:init(fullscreenpanel)
@@ -42,8 +44,8 @@ function love.update(dt)
     for i,a in pairs(game.airports) do
       for j,p in pairs(a.planes) do
         p:move()
-        --temp fix TODO make properly
-        if frame % 80 == 0 then
+
+        if(p.angle > 0.97 * game.sweep.rot and p.angle < 1.03 * game.sweep.rot) then
           p:update_draw_position()
         end
       end
