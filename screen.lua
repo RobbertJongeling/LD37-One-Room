@@ -73,9 +73,18 @@ function Screen:draw_planes(panel, planes)
 end
 
 function Screen:draw_trajectory(panel, plane)
-    local hist = plane.hist
-    love.graphics.setColor(self.grey)
-    love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, hist[1].x), self:scaley(panel, hist[1].y))
+  love.graphics.setColor(self.grey)
+  local hist = plane.hist
+  local last_index = 0
+  for i, h in pairs(hist) do
+    local this = h
+    local next = hist[i+1]
+    if next ~= nil then
+      love.graphics.line(self:scalex(panel, this.x), self:scaley(panel, this.y), self:scalex(panel, next.x), self:scaley(panel, next.y))
+    end
+    last_index = i
+  end
+  love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, hist[last_index].x), self:scaley(panel, hist[last_index].y))
 end
 
 function Screen:draw_runways(panel, runways)
