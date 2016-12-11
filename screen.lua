@@ -26,18 +26,15 @@ function Screen:draw(fullscreen)
 end
 
 function Screen:draw_radar(fullscreen)
-  local panel = {}
   local bordered_panel = {}
   if fullscreen then
-    panel = self.fullscreenpanel
     bordered_panel = self.borderedfspanel
   else
-    panel = self.defaultpanel
     bordered_panel = self.bordereddefpanel
   end
 
   local smallest = 0
-  if panel.width >= bordered_panel.height then
+  if bordered_panel.width >= bordered_panel.height then
     smallest = bordered_panel.height
   else
     smallest = bordered_panel.width

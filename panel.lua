@@ -1,5 +1,5 @@
 Panel = {}
-Panel._index = Panel
+Panel.__index = Panel
 
 function Panel.create(x, y, w, h)
   local panel = {}
@@ -9,6 +9,6 @@ function Panel.create(x, y, w, h)
   panel.y = y
   panel.width = w
   panel.height = h
-  
+
   return panel
 end
