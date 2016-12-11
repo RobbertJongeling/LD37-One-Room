@@ -3,21 +3,21 @@ function love.keypressed(k)
     love.event.quit(0)
   end
   if k == 's' then
-    gameStarted = not gameStarted
+    game.gameStarted = not game.gameStarted
   end
   if k == '0' then
-    activescreen = 0
+    game:set_active_screen(0)
   end
   if k == '1' then
-    activescreen = 1
+    game:set_active_screen(1)
   end
   if k == '2' then
-    activescreen = 2
+    game:set_active_screen(2)
   end
   if k == '3' then
-    activescreen = 3
+    game:set_active_screen(3)
   end
   if k == '4' then
-    activescreen = 4
+    game:set_active_screen(4)
   end
 end

@@ -5,19 +5,14 @@ require "plane"
 require "airport"
 require "screen"
 require "panel"
-require 'borderedpanel'
+require "borderedpanel"
+require "game"
+require "sweep"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
 
   load_assets()
-
-  wwidth = love.graphics.getWidth()
-  wheight = love.graphics.getHeight()
-  defaultBgColor = {54, 196, 180};
-  gameStarted = false
-  mousex = 0
-  mousey = 0
 
   -- dimensions of the "full screen" panel
   local screenx = 110
@@ -26,27 +21,8 @@ function love.load()
   local screenheight = 650
   local fullscreenpanel = Panel.create(screenx, screeny, screenwidth, screenheight)
 
-  sf = 0.00005
-
-  airports = {}
-  for i = 1, 4 do
-    airports[i] = Airport.create()
-    airports[i]:set_name("airport " .. i) --for testing of refactoring
-  end
-
-  screens = {}
-  screens[1] = Screen.create(Panel.create(screenx, screeny, screenwidth/2, screenheight/2), fullscreenpanel, airports[1])
-  screens[2] = Screen.create(Panel.create(screenx + screenwidth/2, screeny, screenwidth/2, screenheight/2), fullscreenpanel, airports[2])
-  screens[3] = Screen.create(Panel.create(screenx, screeny + screenheight/2, screenwidth/2, screenheight/2), fullscreenpanel, airports[3])
-  screens[4] = Screen.create(Panel.create(screenx + screenwidth/2, screeny + screenheight/2, screenwidth/2, screenheight/2), fullscreenpanel, airports[4])
-
-  activescreen = 0
-
-  radar_green = {2, 206, 63 }
-  grey = {169, 169, 169, 169}
-
-  sweep = {}
-  sweep.rot = math.pi*2;
+  game = Game.create()
+  game:init(fullscreenpanel)
 end
 
 function load_assets()
@@ -56,12 +32,12 @@ function load_assets()
 end
 
 function love.update(dt)
-  sweep.rot = (sweep.rot + ((math.pi*2)/150)) % (math.pi*2)
+  game.sweep:update()
 
-  for i,a in pairs(airports) do
+  for i,a in pairs(game.airports) do
     for j,p in pairs(a.planes) do
       p:move()
-      if(false) then
+      if(false) then --TODO update draw position when sweep "hits" planes position
         p:update_draw_position()
       end
     end
@@ -69,7 +45,7 @@ function love.update(dt)
 end
 
 function love.draw()
-  if(gameStarted) then
+  if(game.gameStarted) then
     drawGame()
   else
     printMenu()
@@ -89,11 +65,11 @@ end
 function drawActiveScreen()
   local default = false
   local fullscreen = true
-  if activescreen == 0 then
-    for i,s in pairs(screens) do
+  if game.activescreen == 0 then
+    for i,s in pairs(game.screens) do
       s:draw(default)
     end
   else
-    screens[activescreen]:draw(fullscreen)
+    game.screens[game.activescreen]:draw(fullscreen)
   end
 end
