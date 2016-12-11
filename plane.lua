@@ -25,6 +25,7 @@ function Plane.create()
     plane.rot = math.pi + random_angle
   end
 
+  plane.selected = false
   plane.angle = 0
   plane.crashed = false
   plane.speed = 0.00025;
@@ -82,4 +83,12 @@ function Plane:apply_rotation(rotation)
     self.rot = self.rot + rotation
     table.insert(self.hist, {x = self.x, y = self.y})
   end
+end
+
+function Plane:select()
+  self.selected = true
+end
+
+function Plane:unselect()
+  self.selected = false
 end

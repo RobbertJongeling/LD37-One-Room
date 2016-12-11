@@ -21,7 +21,8 @@ function love.load()
 end
 
 function load_assets()
-  plane_asset = love.graphics.newImage("assets/black-plane.png")
+  plane_asset = love.graphics.newImage("assets/radar-green-plane.png")
+  selected_plane_asset = love.graphics.newImage("assets/yellow-plane.png")
   crashed_plane_asset = love.graphics.newImage("assets/crashed-plane.png")
   foregroundImage = love.graphics.newImage("assets/background.png")
   sweep_asset = love.graphics.newImage("assets/radar-sweep.png")
@@ -120,5 +121,27 @@ function create_buttons()
         end
       end
     end)
+  btns[7] = Button.create(1341, 844, 129, 42,
+    function()
+      if game.activescreen > 0 then
+        game:unselect_all()
+        game.airports[game.activescreen].planes[1]:select()
+      end
+    end)
+  btns[8] = Button.create(1341, 895, 129, 42,
+    function()
+      if game.activescreen > 0 then
+        game:unselect_all()
+        game.airports[game.activescreen].planes[2]:select()
+      end
+    end)
+  btns[9] = Button.create(1341, 946, 129, 42,
+    function()
+      if game.activescreen > 0 then
+        game:unselect_all()
+        game.airports[game.activescreen].planes[3]:select()
+      end
+    end)
+
   return btns
 end

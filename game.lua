@@ -59,7 +59,15 @@ end
 
 function Game:handle_rotation(planes, key)
   for i, p in pairs(planes) do
-    if key == "left" then p:apply_rotation(-0.2) end
-    if key == "right" then p:apply_rotation(0.2) end
+    if key == "left" then p:apply_rotation(-0.1) end
+    if key == "right" then p:apply_rotation(0.1) end
+  end
+end
+
+function Game:unselect_all()
+  for i, a in pairs(self.airports) do
+    for j, p in pairs(a.planes) do
+      p:unselect()
+    end
   end
 end

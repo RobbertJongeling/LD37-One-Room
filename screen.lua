@@ -70,8 +70,13 @@ function Screen:draw_planes(panel, planes)
         love.graphics.setColor(255, 255, 255, 255)
         love.graphics.draw(crashed_plane_asset, drawx, drawy, p.drawrot, s, s, ox, oy)
       else
-        love.graphics.setColor(self.radar_green)
-        love.graphics.draw(plane_asset, drawx, drawy, p.drawrot, s, s, ox, oy)
+        if(p.selected) then
+          love.graphics.setColor(255, 255, 0, 255)
+          love.graphics.draw(selected_plane_asset, drawx, drawy, p.drawrot, s, s, ox, oy)
+        else
+          love.graphics.setColor(self.radar_green)
+          love.graphics.draw(plane_asset, drawx, drawy, p.drawrot, s, s, ox, oy)
+        end
       end
     end
   end
