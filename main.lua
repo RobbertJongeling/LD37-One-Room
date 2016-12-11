@@ -14,7 +14,6 @@ function love.load()
 
   load_assets()
   game = Game.create()
-  frame = 0
 end
 
 function load_assets()
@@ -37,7 +36,6 @@ function start_game()
 end
 
 function love.update(dt)
-  frame = (frame + 1) % 80
   if(game.gameStarted) then
     game.sweep:update()
 
@@ -45,7 +43,7 @@ function love.update(dt)
       for j,p in pairs(a.planes) do
         p:move()
 
-        if(p.angle > 0.97 * game.sweep.rot and p.angle < 1.03 * game.sweep.rot) then
+        if(p.angle > 0.91 * game.sweep.rot and p.angle < 1.01 * game.sweep.rot) then
           p:update_draw_position()
         end
       end
