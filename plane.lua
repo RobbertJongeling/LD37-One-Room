@@ -6,22 +6,23 @@ function Plane.create()
   setmetatable(plane, Plane)
 
   local rand  = love.math.random()
+  local random_angle = love.math.random() - math.pi/8
   if rand < .25 then -- ceiling
     plane.x = love.math.random()
     plane.y = 0.01
-    plane.rot = math.pi * 0.5
+    plane.rot = math.pi * 0.5 + random_angle
   elseif rand < .5 then -- floor
     plane.x = love.math.random()
     plane.y = 0.99
-    plane.rot = math.pi * 1.5
+    plane.rot = math.pi * 1.5 + random_angle
   elseif rand < .75 then -- left
     plane.x = 0.01
     plane.y = love.math.random()
-    plane.rot = 0
+    plane.rot = 0 + random_angle
   else -- right
     plane.x = 0.99
     plane.y = love.math.random()
-    plane.rot = math.pi
+    plane.rot = math.pi + random_angle
   end
 
   plane.speed = 0.00025;
