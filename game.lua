@@ -47,6 +47,7 @@ function Game:set_active_screen(index)
 end
 
 function Game:handle_key_pressed(key)
+  if not self.gameStarted then return end
   if self.activescreen == 0 then
     for i=1, 4 do
       self:handle_rotation(self.airports[i].planes, key)

@@ -80,16 +80,19 @@ end
 function Screen:draw_trajectory(panel, plane)
   love.graphics.setColor(self.grey)
   local hist = plane.drawhist
-  local last_index = 0
-  for i, h in pairs(hist) do
-    local this = h
+  local last_index = 1
+  for i, this in pairs(hist) do
     local next = hist[i+1]
     if next ~= nil then
-      love.graphics.line(self:scalex(panel, this.x), self:scaley(panel, this.y), self:scalex(panel, next.x), self:scaley(panel, next.y))
+      love.graphics.line(
+        self:scalex(panel, this.x), self:scaley(panel, this.y),
+        self:scalex(panel, next.x), self:scaley(panel, next.y))
     end
     last_index = i
   end
-  love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, hist[last_index].x), self:scaley(panel, hist[last_index].y))
+  love.graphics.line(
+    self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy),
+    self:scalex(panel, hist[last_index].x), self:scaley(panel, hist[last_index].y))
 end
 
 function Screen:draw_runways(panel, runways)
