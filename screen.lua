@@ -79,7 +79,7 @@ end
 
 function Screen:draw_trajectory(panel, plane)
   love.graphics.setColor(self.grey)
-  local hist = plane.hist
+  local hist = plane.drawhist
   local last_index = 0
   for i, h in pairs(hist) do
     local this = h

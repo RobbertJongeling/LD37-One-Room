@@ -25,13 +25,15 @@ function Plane.create()
     plane.rot = math.pi + random_angle
   end
 
+  plane.angle = 0
+  plane.crashed = false
   plane.speed = 0.00025;
   plane.hist = {{x = plane.x, y = plane.y}}
+
   plane.drawx = plane.x
   plane.drawy = plane.y
   plane.drawrot = plane.rot
-  plane.angle = 0
-  plane.crashed = false
+  plane.drawhist = plane.hist
 
   return plane
 end
@@ -58,6 +60,7 @@ function Plane:update_draw_position()
     self.drawx = self.x
     self.drawy = self.y
     self.drawrot = self.rot
+    self.drawhist = self.hist
   end
 end
 

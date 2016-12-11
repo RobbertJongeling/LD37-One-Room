@@ -47,8 +47,8 @@ function love.update(dt)
       for i, b in pairs(buttons) do
         if b:isclicked(mousex, mousey) then b:click() end
       end
-      --mousex = nil
-      --mousey = nil
+      mousex = nil
+      mousey = nil
     end
 
     game.sweep:update()
@@ -91,7 +91,6 @@ end
 function drawForeground()
   love.graphics.setColor(255,255,255)
   love.graphics.draw(foregroundImage, 0, 0)
-  love.graphics.print("mousex: " .. mousex .. " mousey: " .. mousey, 10, 10)
 end
 
 function drawActiveScreen()
