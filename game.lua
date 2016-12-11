@@ -47,7 +47,16 @@ function Game:set_active_screen(index)
 end
 
 function Game:handle_key_pressed(key)
-  local planes = self.screens[self.activescreen].airport.planes
+  if self.activescreen == 0 then
+    for i=1, 4 do
+      self:handle_rotation(self.airports[i].planes, key)
+    end
+  else
+    self:handle_rotation(self.screens[self.activescreen].airport.planes, key)
+  end
+end
+
+function Game:handle_rotation(planes, key)
   for i, p in pairs(planes) do
     if key == "left" then p:apply_rotation(-0.2) end
     if key == "right" then p:apply_rotation(0.2) end
