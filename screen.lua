@@ -10,7 +10,7 @@ function Screen.create(defaultpanel, fullscreenpanel, airport)
   screen.bordereddefpanel = Borderedpanel.create(defaultpanel, 50)
   screen.fullscreenpanel = fullscreenpanel
   screen.borderedfspanel = Borderedpanel.create(fullscreenpanel, 50)
-  screen.sf = 0.00005
+  screen.sf = 0.00015
   screen.radar_green = {2, 206, 63 }
   screen.grey = {169, 169, 169, 169}
 

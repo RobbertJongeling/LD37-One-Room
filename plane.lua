@@ -79,7 +79,7 @@ function Plane:has_collision_with(plane)
 end
 
 function Plane:apply_rotation(rotation)
-  if not self.crashed then
+  if not self.crashed and self.selected then
     self.rot = self.rot + rotation
     table.insert(self.hist, {x = self.x, y = self.y})
   end
