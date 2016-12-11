@@ -14,6 +14,7 @@ function Plane.create()
   plane.drawx = plane.x
   plane.drawy = plane.y
   plane.angle = 0
+  plane.crashed = false
 
   return plane
 end
@@ -38,4 +39,14 @@ end
 function Plane:update_draw_position()
   self.drawx = self.x
   self.drawy = self.y
+end
+
+function Plane:destroy()
+  self.speed = 0
+  self.crashed = true
+end
+
+function Plane:has_collision_with(plane)
+  local r = math.sqrt((plane.x - self.x) * (plane.x - self.x) + (plane.y - self.y) * (plane.y - self.y))
+  return r < 0.01 --magic value
 end

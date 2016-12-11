@@ -52,7 +52,7 @@ function Screen:draw_radar(fullscreen)
   self:draw_sweep(bordered_panel)
 
   love.graphics.setColor(self.radar_green)
-  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)  
+  love.graphics.print(self.airport.name, bordered_panel.x, bordered_panel.y)
 end
 
 function Screen:draw_planes(panel, planes)
@@ -67,7 +67,11 @@ function Screen:draw_planes(panel, planes)
     if drawx > panel.x and drawx < (panel.x + panel.width) and drawy > panel.y and drawy < (panel.y + panel.height) then
       self:draw_trajectory(panel, p)
       love.graphics.setColor(self.radar_green)
-      love.graphics.draw(plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
+      if(p.crashed) then
+        love.graphics.draw(crashed_plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
+      else
+        love.graphics.draw(plane_asset, drawx, drawy, p.rot, s, s, ox, oy)
+      end
     end
   end
 end

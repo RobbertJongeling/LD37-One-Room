@@ -18,6 +18,7 @@ end
 
 function load_assets()
   plane_asset = love.graphics.newImage("assets/black-plane.png")
+  crashed_plane_asset = love.graphics.newImage("assets/crashed-plane.png")
   foregroundImage = love.graphics.newImage("assets/background.png")
   sweep_asset = love.graphics.newImage("assets/radar-sweep.png")
 end
@@ -40,11 +41,21 @@ function love.update(dt)
     game.sweep:update()
 
     for i,a in pairs(game.airports) do
+      --move planes
       for j,p in pairs(a.planes) do
         p:move()
 
         if(p.angle > 0.91 * game.sweep.rot and p.angle < 1.01 * game.sweep.rot) then
           p:update_draw_position()
+        end
+      end
+      --check for collisions
+      for j, p1 in pairs(a.planes) do
+        for k, p2 in pairs(a.planes) do
+          if p1 ~= p2 and p1:has_collision_with(p2) then
+            p1:destroy()
+            p2:destroy()
+          end
         end
       end
     end
