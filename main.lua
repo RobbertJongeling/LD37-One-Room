@@ -142,6 +142,14 @@ function create_buttons()
         game.airports[game.activescreen].planes[3]:select()
       end
     end)
+  btns[10] = Button.create(1341, 997, 129, 42,
+    function()
+      game:handle_key_pressed("left")
+    end)
+  btns[11] = Button.create(1485, 997, 129, 42,
+    function()
+      game:handle_key_pressed("right")
+    end)
 
   return btns
 end

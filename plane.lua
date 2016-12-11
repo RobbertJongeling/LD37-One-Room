@@ -73,7 +73,7 @@ end
 function Plane:has_collision_with(plane)
   if not self.crashed and not plane.crashed then
     local r = math.sqrt((plane.x - self.x) * (plane.x - self.x) + (plane.y - self.y) * (plane.y - self.y))
-    return r < 0.01 --magic value
+    return r < 0.05 --magic value
   end
   return false
 end

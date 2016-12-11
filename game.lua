@@ -58,8 +58,8 @@ end
 
 function Game:handle_rotation(planes, key)
   for i, p in pairs(planes) do
-    if key == "left" then p:apply_rotation(-0.1) end
-    if key == "right" then p:apply_rotation(0.1) end
+    if key == "left" then p:apply_rotation(-0.05) end
+    if key == "right" then p:apply_rotation(0.05) end
   end
 end
 
