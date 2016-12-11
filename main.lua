@@ -12,8 +12,6 @@ require "button"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
-  mousex = 0
-  mousey = 0
 
   load_assets()
   game = Game.create()
@@ -42,7 +40,11 @@ function start_game()
 end
 
 function love.update(dt)
-  if(game.gameStarted) then
+  if not game.gameStarted then
+    if mousex and mousey then
+      start_game()
+    end
+  else
     --check button clicks
     if mousex and mousey then
       for i, b in pairs(buttons) do
