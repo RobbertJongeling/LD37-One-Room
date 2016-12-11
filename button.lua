@@ -15,7 +15,7 @@ function Button.create(x, y, width, height, callback)
 end
 
 function Button:isclicked(mousex, mousey)
-  return mousex >= self.x and mousex <= mousex + self.width and mousey > self.y and mousey <= self.y + self.height
+  return mousex >= self.x and mousex <= self.x + self.width and mousey >= self.y and mousey <= self.y + self.height
 end
 
 function Button:click()

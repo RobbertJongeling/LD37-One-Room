@@ -12,6 +12,8 @@ require "button"
 
 function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
+  mousex = 0
+  mousey = 0
 
   load_assets()
   game = Game.create()
@@ -45,8 +47,8 @@ function love.update(dt)
       for i, b in pairs(buttons) do
         if b:isclicked(mousex, mousey) then b:click() end
       end
-      mousex = nil
-      mousey = nil
+      --mousex = nil
+      --mousey = nil
     end
 
     game.sweep:update()
@@ -89,6 +91,7 @@ end
 function drawForeground()
   love.graphics.setColor(255,255,255)
   love.graphics.draw(foregroundImage, 0, 0)
+  love.graphics.print("mousex: " .. mousex .. " mousey: " .. mousey, 10, 10)
 end
 
 function drawActiveScreen()
@@ -105,6 +108,18 @@ end
 
 function create_buttons()
   local btns = {}
-  btns[1] = Button.create(307,844,129,42, function() game:set_active_screen(1) end)
+  btns[1] = Button.create(307, 844, 129, 42, function() game:set_active_screen(1) end)
+  btns[2] = Button.create(307, 895, 129, 42, function() game:set_active_screen(2) end)
+  btns[3] = Button.create(307, 946, 129, 42, function() game:set_active_screen(3) end)
+  btns[4] = Button.create(307, 997, 129, 42, function() game:set_active_screen(4) end)
+  btns[5] = Button.create(450, 844, 129, 590, function() game:set_active_screen(0) end)
+  btns[6] = Button.create(125, 830, 105, 100,
+    function()
+      for i,a in pairs(game.airports) do
+        for j,p in pairs(a.planes) do
+          p:destroy()
+        end
+      end
+    end)
   return btns
 end
