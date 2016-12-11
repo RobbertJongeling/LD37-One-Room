@@ -13,6 +13,7 @@ function love.load()
   if arg and arg[#arg] == "-debug" then require ("modedebug").start() end
 
   load_assets()
+  buttons = create_buttons()
   game = Game.create()
 end
 
@@ -90,4 +91,8 @@ function drawActiveScreen()
   else
     game.screens[game.activescreen]:draw(fullscreen)
   end
+end
+
+function create_buttons()
+  
 end
