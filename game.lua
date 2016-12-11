@@ -15,7 +15,7 @@ end
 
 function Game:init(fullscreenpanel)
   game.airports = self:create_airports()
-  game.screens = self:create_screens(fullscreenpanel)  
+  game.screens = self:create_screens(fullscreenpanel)
   game.sweep = Sweep.create()
 end
 
@@ -44,4 +44,12 @@ end
 
 function Game:set_active_screen(index)
   self.activescreen = index
+end
+
+function Game:handle_key_pressed(key)
+  local planes = self.screens[self.activescreen].airport.planes
+  for i, p in pairs(planes) do
+    if key == "left" then p:apply_rotation(-0.2) end
+    if key == "right" then p:apply_rotation(0.2) end
+  end
 end

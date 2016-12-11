@@ -77,8 +77,9 @@ function Screen:draw_planes(panel, planes)
 end
 
 function Screen:draw_trajectory(panel, plane)
+    local hist = plane.hist
     love.graphics.setColor(self.grey)
-    love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, plane.startx), self:scaley(panel, plane.starty))
+    love.graphics.line(self:scalex(panel, plane.drawx), self:scaley(panel, plane.drawy), self:scalex(panel, hist[1].x), self:scaley(panel, hist[1].y))
 end
 
 function Screen:draw_runways(panel, runways)

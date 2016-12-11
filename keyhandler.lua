@@ -20,4 +20,10 @@ function love.keypressed(k)
   if k == '4' then
     game:set_active_screen(4)
   end
+  if k == 'a' then
+    game:handle_key_pressed("left")
+  end
+  if k == 'd' then
+    game:handle_key_pressed("right")
+  end
 end
