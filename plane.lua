@@ -5,9 +5,25 @@ function Plane.create()
   local plane = {}
   setmetatable(plane, Plane)
 
-  plane.x = love.math.random()
-  plane.y = love.math.random()
-  plane.rot = love.math.random()*2*math.pi
+  local rand  = love.math.random()
+  if rand < .25 then -- ceiling
+    plane.x = love.math.random()
+    plane.y = 0.01
+    plane.rot = math.pi * 0.5
+  elseif rand < .5 then -- floor
+    plane.x = love.math.random()
+    plane.y = 0.99
+    plane.rot = math.pi * 1.5
+  elseif rand < .75 then -- left
+    plane.x = 0.01
+    plane.y = love.math.random()
+    plane.rot = 0
+  else -- right
+    plane.x = 0.99
+    plane.y = love.math.random()
+    plane.rot = math.pi
+  end
+
   plane.speed = 0.00025;
   plane.hist = {{x = plane.x, y = plane.y}}
   plane.drawx = plane.x
